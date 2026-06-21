@@ -2,7 +2,7 @@
 
 FactX is being rebuilt as a clean Java desktop portfolio project for internal receipt and invoice control in small businesses.
 
-Current version: `v0.0.4`.
+Current version: `v0.0.5`.
 
 This repository is a clean reset. The previous prototype is kept only as a local ignored backup in `_factx_legacy_local/` and must not be committed.
 
@@ -47,7 +47,7 @@ Docker is allowed only as a development and portfolio demo helper for PostgreSQL
 - SLF4J + Logback
 - JUnit 5
 
-No Spring Boot, Hibernate/JPA, OCR, scanner integration, AI, login, roles or sync are included in `v0.0.4`.
+No Spring Boot, Hibernate/JPA, OCR, scanner integration, AI, login, roles or sync are included in `v0.0.5`.
 
 ## Configuration
 
@@ -92,6 +92,14 @@ mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.DatabaseCheck
 
 The database check validates PostgreSQL connectivity, runs Flyway migrations explicitly and confirms the core tables exist. It is a technical development check, not a user-facing feature. The check normalizes the Java timezone to `America/Argentina/Buenos_Aires`, which PostgreSQL accepts for the local development environment.
 
+Run the technical repository check against the development PostgreSQL container:
+
+```bash
+mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.RepositoryCheck
+```
+
+The repository check inserts synthetic supplier and document rows, reads them back through the Jdbi repositories and deletes them. It is an explicit development check, not a user-facing feature.
+
 If running Java commands manually outside the Maven check, use a PostgreSQL-compatible timezone:
 
 ```bash
@@ -106,8 +114,8 @@ Docker may warn about orphan containers such as `factx-db-1` when an older compo
 docker compose up -d --remove-orphans
 ```
 
-The app does not need Docker to open the current `v0.0.4` window.
+The app does not need Docker to open the current `v0.0.5` window.
 
 ## Status
 
-`v0.0.4` contains the clean Maven base, a minimal JavaFX window, initial documentation, a development PostgreSQL compose file, a first Flyway migration for the future core tables, explicit database configuration classes, a technical database bootstrap check, timezone hardening and a strategic roadmap.
+`v0.0.5` contains the clean Maven base, a minimal JavaFX window, initial documentation, a development PostgreSQL compose file, a first Flyway migration for the future core tables, explicit database configuration classes, technical database checks, timezone hardening, a strategic roadmap and base supplier/document persistence repositories.

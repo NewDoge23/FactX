@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.5 - Persistencia base sin UI
+
+- Added minimal supplier and document domain models.
+- Added base Jdbi repositories.
+- Added tests for persistence foundation.
+
 ## v0.0.4 - Entorno dev y roadmap estratégico
 
 - Normalized/documented timezone handling for PostgreSQL development checks.

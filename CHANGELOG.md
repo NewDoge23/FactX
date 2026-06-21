@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.4 - Entorno dev y roadmap estratégico
+
+- Normalized/documented timezone handling for PostgreSQL development checks.
+- Added Docker troubleshooting notes.
+- Documented orphan container guidance.
+- Replaced roadmap with a more strategic, granular plan toward the first public milestone.
+
 ## v0.0.3 - Bootstrap técnico de base de datos
 
 - Added a technical database bootstrap that runs Flyway, validates connectivity and checks core tables.

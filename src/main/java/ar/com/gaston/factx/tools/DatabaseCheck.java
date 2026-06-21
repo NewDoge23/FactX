@@ -5,11 +5,16 @@ import ar.com.gaston.factx.config.DatabaseBootstrap;
 import ar.com.gaston.factx.config.DatabaseConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import java.util.TimeZone;
+
 public final class DatabaseCheck {
+    static final String DEVELOPMENT_TIME_ZONE = "America/Argentina/Buenos_Aires";
+
     private DatabaseCheck() {
     }
 
     public static void main(String[] args) {
+        configureDevelopmentTimeZone();
         System.out.println("FactX database check");
 
         try {
@@ -31,5 +36,11 @@ public final class DatabaseCheck {
 
     private static String status(boolean ok) {
         return ok ? "OK" : "ERROR";
+    }
+
+    static void configureDevelopmentTimeZone() {
+        TimeZone timeZone = TimeZone.getTimeZone(DEVELOPMENT_TIME_ZONE);
+        TimeZone.setDefault(timeZone);
+        System.setProperty("user.timezone", DEVELOPMENT_TIME_ZONE);
     }
 }

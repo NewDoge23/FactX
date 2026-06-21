@@ -20,13 +20,19 @@ PostgreSQL is used for realistic relational persistence during development and d
 
 Flyway records schema evolution explicitly and keeps database changes reviewable.
 
+FactX does not run `Flyway.repair()` automatically. Migration failures should stay visible and fail clearly.
+
 ## HikariCP
 
 HikariCP provides a small, standard JDBC connection pool.
 
+The initial pool name is `FactXPool`. The JavaFX shell does not create a pool during startup yet.
+
 ## Jdbi
 
 Jdbi keeps persistence explicit without adding a heavy ORM layer.
+
+Jdbi is created from a `DataSource` when persistence code needs it. No DAOs are included in `v0.0.2`.
 
 ## PDFBox
 

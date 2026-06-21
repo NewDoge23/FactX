@@ -6,7 +6,7 @@
 
     <groupId>ar.com.gaston</groupId>
     <artifactId>factx</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>FactX</name>
     <description>Desktop app for internal receipt and invoice control in small businesses.</description>
 

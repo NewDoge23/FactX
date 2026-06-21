@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: factx-postgres
+    environment:
+      POSTGRES_DB: factx
+      POSTGRES_USER: factx
+      POSTGRES_PASSWORD: factx
+      TZ: America/Argentina/Buenos_Aires
+    ports:
+      - "5432:5432"
+    volumes:
+      - factx_pg_data:/var/lib/postgresql/data
+
+volumes:
+  factx_pg_data:

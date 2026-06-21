@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      alignment="CENTER"
+      spacing="12"
+      styleClass="app-shell">
+    <padding>
+        <Insets top="48" right="48" bottom="48" left="48"/>
+    </padding>
+
+    <Label text="FactX v0.0.1" styleClass="app-title"/>
+    <Label text="Control interno de comprobantes para pequeños negocios" styleClass="app-subtitle"/>
+</VBox>

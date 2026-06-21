@@ -1,0 +1,52 @@
+_factx_legacy_local/
+
+# IDE / editor state
+.idea/
+.vscode/
+.agents/
+*.iml
+
+# Build output
+.gradle/
+build/
+target/
+out/
+*.class
+
+# Runtime / logs / temporary files
+logs/
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Local commercial documents and private samples
+*.pdf
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.tif
+*.tiff
+comprobante-*
+factura-*
+recibo-*
+ticket-*
+private-samples/
+local-samples/
+
+# Local AI/model artifacts, kept out of FactX v1
+ai/
+models/
+*.safetensors
+*.onnx
+
+# OS files
+.DS_Store
+Thumbs.db

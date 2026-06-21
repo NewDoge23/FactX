@@ -2,7 +2,7 @@
 
 FactX is being rebuilt as a clean Java desktop portfolio project for internal receipt and invoice control in small businesses.
 
-Current version: `v0.0.2`.
+Current version: `v0.0.3`.
 
 This repository is a clean reset. The previous prototype is kept only as a local ignored backup in `_factx_legacy_local/` and must not be committed.
 
@@ -47,7 +47,7 @@ Docker is allowed only as a development and portfolio demo helper for PostgreSQL
 - SLF4J + Logback
 - JUnit 5
 
-No Spring Boot, Hibernate/JPA, OCR, scanner integration, AI, login, roles or sync are included in `v0.0.2`.
+No Spring Boot, Hibernate/JPA, OCR, scanner integration, AI, login, roles or sync are included in `v0.0.3`.
 
 ## Configuration
 
@@ -84,8 +84,16 @@ docker compose up -d
 
 Docker is only for development and portfolio demos. It is not a dependency of the final desktop product.
 
-The app does not need Docker to open the current `v0.0.2` window.
+Run the technical database check against the development PostgreSQL container:
+
+```bash
+mvn exec:java -Dexec.mainClass="ar.com.gaston.factx.tools.DatabaseCheck"
+```
+
+The database check validates PostgreSQL connectivity, runs Flyway migrations explicitly and confirms the core tables exist. It is a technical development check, not a user-facing feature.
+
+The app does not need Docker to open the current `v0.0.3` window.
 
 ## Status
 
-`v0.0.2` contains the clean Maven base, a minimal JavaFX window, initial documentation, a development PostgreSQL compose file, a first Flyway migration for the future core tables and explicit database configuration classes.
+`v0.0.3` contains the clean Maven base, a minimal JavaFX window, initial documentation, a development PostgreSQL compose file, a first Flyway migration for the future core tables, explicit database configuration classes and a technical database bootstrap check.

@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.3 - Bootstrap técnico de base de datos
+
+- Added a technical database bootstrap that runs Flyway, validates connectivity and checks core tables.
+- Added a Maven-executable `DatabaseCheck` utility for the development PostgreSQL database.
+- Added unit tests for core table verification logic without requiring PostgreSQL.
+- Documented the development database check flow.
+
 ## v0.0.2 - Configuración inicial de base de datos
 
 - Added environment-based application configuration.

@@ -6,7 +6,7 @@
 
     <groupId>ar.com.gaston</groupId>
     <artifactId>factx</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <name>FactX</name>
     <description>Desktop app for internal receipt and invoice control in small businesses.</description>
 
@@ -87,6 +87,7 @@
                 <version>3.13.0</version>
                 <configuration>
                     <release>${maven.compiler.release}</release>
+                    <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
             <plugin>
@@ -96,6 +97,11 @@
                 <configuration>
                     <mainClass>ar.com.gaston.factx.Main</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

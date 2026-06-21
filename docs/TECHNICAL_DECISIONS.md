@@ -32,7 +32,13 @@ The initial pool name is `FactXPool`. The JavaFX shell does not create a pool du
 
 Jdbi keeps persistence explicit without adding a heavy ORM layer.
 
-Jdbi is created from a `DataSource` when persistence code needs it. No DAOs are included in `v0.0.2`.
+Jdbi is created from a `DataSource` when persistence code needs it. No DAOs are included yet.
+
+## Database Bootstrap Check
+
+`v0.0.3` adds a command-line technical check for the development PostgreSQL database. It creates the configured pool, runs Flyway explicitly, validates `SELECT 1` and verifies the four current core tables.
+
+This check is intentionally separate from the JavaFX startup. It is a development validation tool, not a user-facing feature.
 
 ## PDFBox
 

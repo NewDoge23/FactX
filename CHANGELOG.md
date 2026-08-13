@@ -1,6 +1,12 @@
 # Changelog
 
-## v0.0.8 - JavaFX application shell (Unreleased)
+## v0.0.9 - Pre-v0.1 project review
+
+- Audited the technical base, documentation, tests, repository hygiene and milestone scope before starting supplier management.
+- Added a Flyway migration that makes the document-to-supplier relationship mandatory, matching the domain and service rules.
+- Removed the unused empty `util` package.
+
+## v0.0.8 - JavaFX application shell
 
 - Replaced the static JavaFX view with a header, local navigation and one central content area.
 - Added explicit placeholders for supplier and document screens without business CRUD or persistence startup.

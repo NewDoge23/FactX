@@ -57,7 +57,7 @@ Use this checklist to validate the technical base from a clean FactX checkout. I
 
    The first run reports five suppliers and six documents created. Run the same command a second time: it should report zero newly created rows and the existing dataset counts instead.
 
-8. Start the minimal JavaFX shell if a visual environment is available:
+8. Start the JavaFX application shell if a visual environment is available:
 
    ```bash
    mvn javafx:run

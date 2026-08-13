@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class AppInfoTest {
 
     @Test
-    void exposesInitialVersion() {
+    void exposesApplicationMetadata() {
         assertEquals("FactX", AppInfo.NAME);
-        assertEquals("0.0.8", AppInfo.VERSION);
+        assertEquals("0.0.9", AppInfo.VERSION);
     }
 }

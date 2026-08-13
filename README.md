@@ -2,9 +2,9 @@
 
 FactX is being rebuilt as a clean Java desktop portfolio project for internal receipt and invoice control in small businesses.
 
-Current version: `v0.0.8`.
+Current version: `v0.0.9`.
 
-Latest milestone: JavaFX application shell and local placeholder navigation.
+Latest milestone: pre-`v0.1.0` technical-base review and stabilization.
 
 This repository is a clean reset. The previous prototype is kept only as a local ignored backup in `_factx_legacy_local/` and must not be committed.
 
@@ -49,7 +49,7 @@ Docker is allowed only as a development and portfolio demo helper for PostgreSQL
 - SLF4J + Logback
 - JUnit 5
 
-No Spring Boot, Hibernate/JPA, OCR, scanner integration, AI, login, roles or sync are included in `v0.0.8`.
+No Spring Boot, Hibernate/JPA, OCR, scanner integration, AI, login, roles or sync are included in `v0.0.9`.
 
 ## Configuration
 
@@ -126,8 +126,8 @@ Docker may warn about orphan containers such as `factx-db-1` when an older compo
 docker compose up -d --remove-orphans
 ```
 
-The app does not need Docker to open the current `v0.0.8` window.
+The app does not need Docker to open the current `v0.0.9` window.
 
 ## Status
 
-`v0.0.8` adds an offline JavaFX application shell with local navigation between Inicio, Proveedores and Documentos. Proveedores and Documentos are explicit placeholders; this milestone does not add business CRUD, database startup or alter the post-v1 boundary for a future FijaStock sales-import and billing integration.
+`v0.0.9` is a pre-`v0.1.0` review and stabilization milestone. The offline JavaFX shell remains limited to local navigation and explicit placeholders; it does not add business CRUD, database startup or alter the post-v1 boundary for a future FijaStock sales-import and billing integration.

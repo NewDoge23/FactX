@@ -11,13 +11,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/ui/main-view.fxml"));
-        Scene scene = new Scene(loader.load(), 900, 560);
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/ui/main-shell.fxml"));
+        Scene scene = new Scene(loader.load(), 1000, 640);
         scene.getStylesheets().add(Main.class.getResource("/ui/styles.css").toExternalForm());
 
-        stage.setTitle("FactX");
-        stage.setMinWidth(720);
-        stage.setMinHeight(420);
+        stage.setTitle("FactX - Control interno de comprobantes");
+        stage.setMinWidth(860);
+        stage.setMinHeight(540);
         stage.setScene(scene);
         stage.show();
     }

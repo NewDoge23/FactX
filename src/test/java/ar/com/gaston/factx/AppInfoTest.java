@@ -10,6 +10,6 @@ class AppInfoTest {
     @Test
     void exposesInitialVersion() {
         assertEquals("FactX", AppInfo.NAME);
-        assertEquals("0.0.7", AppInfo.VERSION);
+        assertEquals("0.0.8", AppInfo.VERSION);
     }
 }

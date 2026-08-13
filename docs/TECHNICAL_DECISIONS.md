@@ -12,6 +12,8 @@ FactX resets to Maven for a simple, widely recognized Java build structure.
 
 FactX is a desktop app. JavaFX keeps the UI local, inspectable and appropriate for a portfolio project focused on Java.
 
+`v0.0.8` keeps the shell in FXML because the project already uses FXML and its layout is declarative. `MainShellController` owns only local navigation and changes a single central content area from `NavigationDestination`; it does not access services, repositories or database configuration. The Proveedores and Documentos entries remain placeholders until their scheduled milestones, and starting the shell does not create a database pool or run migrations.
+
 ## PostgreSQL
 
 PostgreSQL is used for realistic relational persistence during development and demos.

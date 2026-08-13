@@ -1,14 +1,77 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
 .app-shell {
     -fx-background-color: #f7f8fa;
 }
 
+.top-bar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #dce2e8 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
 .app-title {
-    -fx-font-size: 32px;
+    -fx-font-size: 27px;
     -fx-font-weight: 700;
-    -fx-text-fill: #20242a;
+    -fx-text-fill: #1f2933;
 }
 
 .app-subtitle {
-    -fx-font-size: 16px;
-    -fx-text-fill: #4f5b67;
+    -fx-font-size: 14px;
+    -fx-text-fill: #52616b;
+}
+
+.version-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #52616b;
+}
+
+.navigation-panel {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent #dce2e8 transparent transparent;
+    -fx-border-width: 0 1 0 0;
+}
+
+.navigation-heading {
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #71808c;
+}
+
+.navigation-button {
+    -fx-alignment: CENTER_LEFT;
+    -fx-background-color: transparent;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-padding: 10 12;
+    -fx-text-fill: #33414c;
+}
+
+.navigation-button:hover {
+    -fx-background-color: #edf2f5;
+}
+
+.navigation-button-active {
+    -fx-background-color: #dcecf0;
+    -fx-font-weight: 700;
+    -fx-text-fill: #155e75;
+}
+
+.content-panel {
+    -fx-background-color: #f7f8fa;
+}
+
+.content-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1f2933;
+}
+
+.content-message {
+    -fx-font-size: 15px;
+    -fx-line-spacing: 4;
+    -fx-text-fill: #52616b;
 }

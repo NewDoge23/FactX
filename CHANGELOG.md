@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.8 - JavaFX application shell (Unreleased)
+
+- Replaced the static JavaFX view with a header, local navigation and one central content area.
+- Added explicit placeholders for supplier and document screens without business CRUD or persistence startup.
+- Added pure unit coverage for the navigation destinations.
+
 ## v0.0.7 - Datos demo sintéticos y clean clone
 
 - Added an explicit, idempotent synthetic demo-data loader for development and demos.

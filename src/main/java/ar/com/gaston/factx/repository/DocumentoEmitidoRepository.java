@@ -1,7 +1,7 @@
 package ar.com.gaston.factx.repository;
 
-import ar.com.gaston.factx.domain.Documento;
-import ar.com.gaston.factx.domain.EstadoDocumento;
+import ar.com.gaston.factx.domain.DocumentoEmitido;
+import ar.com.gaston.factx.domain.EstadoDocumentoEmitido;
 import ar.com.gaston.factx.domain.TipoDocumento;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.Update;
@@ -14,28 +14,28 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class DocumentoRepository {
+public class DocumentoEmitidoRepository {
     private final Jdbi jdbi;
 
-    public DocumentoRepository(Jdbi jdbi) {
+    public DocumentoEmitidoRepository(Jdbi jdbi) {
         this.jdbi = Objects.requireNonNull(jdbi, "jdbi");
     }
 
-    public Documento create(Documento documento) {
+    public DocumentoEmitido create(DocumentoEmitido documento) {
         return jdbi.withHandle(handle ->
                 handle.createQuery("""
-                                INSERT INTO documento (
-                                    proveedor_id, tipo, numero, fecha_emision, fecha_vencimiento,
+                                INSERT INTO documento_emitido (
+                                    cliente_id, tipo, numero, fecha_emision, fecha_vencimiento,
                                     moneda, total, estado, notas
                                 )
                                 VALUES (
-                                    :proveedorId, :tipo, :numero, :fechaEmision, :fechaVencimiento,
+                                    :clienteId, :tipo, :numero, :fechaEmision, :fechaVencimiento,
                                     :moneda, :total, :estado, :notas
                                 )
-                                RETURNING id, proveedor_id, tipo, numero, fecha_emision, fecha_vencimiento,
+                                RETURNING id, cliente_id, tipo, numero, fecha_emision, fecha_vencimiento,
                                           moneda, total, estado, notas, created_at, updated_at
                                 """)
-                        .bind("proveedorId", documento.proveedorId())
+                        .bind("clienteId", documento.clienteId())
                         .bind("tipo", documento.tipo().name())
                         .bind("numero", documento.numero())
                         .bind("fechaEmision", documento.fechaEmision())
@@ -44,59 +44,43 @@ public class DocumentoRepository {
                         .bind("total", documento.total())
                         .bind("estado", documento.estado().name())
                         .bind("notas", documento.notas())
-                        .map(DocumentoRepository::mapDocumento)
+                        .map(DocumentoEmitidoRepository::mapDocumento)
                         .one()
         );
     }
 
-    public Optional<Documento> findById(long id) {
+    public Optional<DocumentoEmitido> findById(long id) {
         return jdbi.withHandle(handle ->
-                handle.createQuery("""
-                                SELECT id, proveedor_id, tipo, numero, fecha_emision, fecha_vencimiento,
-                                       moneda, total, estado, notas, created_at, updated_at
-                                FROM documento
-                                WHERE id = :id
-                                """)
+                handle.createQuery(selectDocuments() + " WHERE id = :id")
                         .bind("id", id)
-                        .map(DocumentoRepository::mapDocumento)
+                        .map(DocumentoEmitidoRepository::mapDocumento)
                         .findOne()
         );
     }
 
-    public List<Documento> findAll() {
+    public List<DocumentoEmitido> findAll() {
         return jdbi.withHandle(handle ->
-                handle.createQuery("""
-                                SELECT id, proveedor_id, tipo, numero, fecha_emision, fecha_vencimiento,
-                                       moneda, total, estado, notas, created_at, updated_at
-                                FROM documento
-                                ORDER BY fecha_emision DESC NULLS LAST, id DESC
-                                """)
-                        .map(DocumentoRepository::mapDocumento)
+                handle.createQuery(selectDocuments() + " ORDER BY fecha_emision DESC NULLS LAST, id DESC")
+                        .map(DocumentoEmitidoRepository::mapDocumento)
                         .list()
         );
     }
 
-    public List<Documento> findByProveedorId(long proveedorId) {
+    public List<DocumentoEmitido> findByClienteId(long clienteId) {
         return jdbi.withHandle(handle ->
-                handle.createQuery("""
-                                SELECT id, proveedor_id, tipo, numero, fecha_emision, fecha_vencimiento,
-                                       moneda, total, estado, notas, created_at, updated_at
-                                FROM documento
-                                WHERE proveedor_id = :proveedorId
-                                ORDER BY fecha_emision DESC NULLS LAST, id DESC
-                                """)
-                        .bind("proveedorId", proveedorId)
-                        .map(DocumentoRepository::mapDocumento)
+                handle.createQuery(selectDocuments() + " WHERE cliente_id = :clienteId ORDER BY fecha_emision DESC NULLS LAST, id DESC")
+                        .bind("clienteId", clienteId)
+                        .map(DocumentoEmitidoRepository::mapDocumento)
                         .list()
         );
     }
 
-    public Optional<Documento> update(Documento documento) {
-        requireId(documento.id(), "document");
+    public Optional<DocumentoEmitido> update(DocumentoEmitido documento) {
+        requireId(documento.id());
         return jdbi.withHandle(handle ->
                 handle.createQuery("""
-                                UPDATE documento
-                                SET proveedor_id = :proveedorId,
+                                UPDATE documento_emitido
+                                SET cliente_id = :clienteId,
                                     tipo = :tipo,
                                     numero = :numero,
                                     fecha_emision = :fechaEmision,
@@ -107,10 +91,11 @@ public class DocumentoRepository {
                                     notas = :notas,
                                     updated_at = now()
                                 WHERE id = :id
-                                RETURNING id, proveedor_id, tipo, numero, fecha_emision, fecha_vencimiento,
+                                RETURNING id, cliente_id, tipo, numero, fecha_emision, fecha_vencimiento,
                                           moneda, total, estado, notas, created_at, updated_at
                                 """)
-                        .bind("proveedorId", documento.proveedorId())
+                        .bind("id", documento.id())
+                        .bind("clienteId", documento.clienteId())
                         .bind("tipo", documento.tipo().name())
                         .bind("numero", documento.numero())
                         .bind("fechaEmision", documento.fechaEmision())
@@ -119,40 +104,47 @@ public class DocumentoRepository {
                         .bind("total", documento.total())
                         .bind("estado", documento.estado().name())
                         .bind("notas", documento.notas())
-                        .bind("id", documento.id())
-                        .map(DocumentoRepository::mapDocumento)
+                        .map(DocumentoEmitidoRepository::mapDocumento)
                         .findOne()
         );
     }
 
     public boolean delete(long id) {
         return jdbi.withHandle(handle -> {
-            Update update = handle.createUpdate("DELETE FROM documento WHERE id = :id");
+            Update update = handle.createUpdate("DELETE FROM documento_emitido WHERE id = :id");
             return update.bind("id", id).execute() > 0;
         });
     }
 
-    private static Documento mapDocumento(ResultSet rs, org.jdbi.v3.core.statement.StatementContext ctx)
+    private static String selectDocuments() {
+        return """
+                SELECT id, cliente_id, tipo, numero, fecha_emision, fecha_vencimiento,
+                       moneda, total, estado, notas, created_at, updated_at
+                FROM documento_emitido
+                """;
+    }
+
+    private static DocumentoEmitido mapDocumento(ResultSet rs, org.jdbi.v3.core.statement.StatementContext ctx)
             throws SQLException {
-        return new Documento(
+        return new DocumentoEmitido(
                 rs.getLong("id"),
-                rs.getLong("proveedor_id"),
+                rs.getLong("cliente_id"),
                 TipoDocumento.fromDatabaseValue(rs.getString("tipo")),
                 rs.getString("numero"),
                 rs.getObject("fecha_emision", LocalDate.class),
                 rs.getObject("fecha_vencimiento", LocalDate.class),
                 rs.getString("moneda"),
                 rs.getBigDecimal("total"),
-                EstadoDocumento.fromDatabaseValue(rs.getString("estado")),
+                EstadoDocumentoEmitido.fromDatabaseValue(rs.getString("estado")),
                 rs.getString("notas"),
                 rs.getObject("created_at", OffsetDateTime.class),
                 rs.getObject("updated_at", OffsetDateTime.class)
         );
     }
 
-    private static void requireId(Long id, String entityName) {
+    private static void requireId(Long id) {
         if (id == null) {
-            throw new IllegalArgumentException("Cannot update " + entityName + " without id.");
+            throw new IllegalArgumentException("Cannot update issued document without id.");
         }
     }
 }

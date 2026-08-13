@@ -2,7 +2,7 @@
 
 ## Product Direction
 
-FactX is a local-first Java desktop portfolio application for small businesses that need a simple, private and understandable way to organize suppliers, invoices, receipts, local attachments, payment status and basic operational follow-up without becoming an ERP, accounting system or cloud platform.
+FactX is a local-first Java desktop portfolio application for small businesses that need a simple, private and understandable way to organize received and issued commercial documents without becoming an ERP, accounting system or cloud platform.
 
 FactX solves the everyday problem of scattered commercial documents: files in folders, receipts from chat apps, invoices from email and informal payment tracking. Its first goal is internal control, not legal accounting automation.
 
@@ -14,9 +14,9 @@ FactX is not an ERP, not AFIP software, not legal bookkeeping, not SaaS and not 
 
 FactX `v1.0.0` should include:
 
-- supplier management;
-- document/comprobante management;
-- simple manual states;
+- supplier, received-document and payment management;
+- customer, issued-document and collection management;
+- separate manual settlement states;
 - practical filters and search;
 - local attachments;
 - CSV export;
@@ -84,15 +84,13 @@ Avoid Spring, Hibernate, complex layering, generic frameworks and premature abst
 - `v0.0.7`: explicit idempotent synthetic demo data loader and clean clone checklist.
 - `v0.0.8`: JavaFX application shell, local placeholder navigation and no business CRUD.
 - `v0.0.9`: pre-`v0.1.0` review of docs, naming, tests, repo hygiene and scope.
+- `v0.0.10`: explicit received/issued commercial-document foundation, no business UI CRUD.
 
 Acceptance: technical base is reproducible, documented and free of business UI shortcuts.
 
 ### `v0.1.x` - Suppliers
 
-- supplier domain model;
-- supplier repository;
-- supplier service;
-- supplier list and form UI;
+- supplier list/form UI over the existing core;
 - basic validation;
 - unit tests and repository checks;
 - README notes for the first business feature.

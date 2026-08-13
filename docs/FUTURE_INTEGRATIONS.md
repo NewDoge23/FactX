@@ -4,7 +4,7 @@
 
 This document records a possible integration between FijaStock and FactX after FactX v1. It is architectural context only. It does not add a runtime integration, database schema, API endpoint, network dependency or fiscal-provider implementation to the current product.
 
-FactX v1 remains a local internal-control application for supplier documents. It must not be expanded into an ERP, a sales system or fiscal software because of this future possibility.
+FactX v1 remains a local internal-control application for received supplier documents and manually recorded issued customer documents. It must not be expanded into an ERP, a sales system or fiscal software because of this future possibility.
 
 ## Intended Relationship
 
@@ -16,6 +16,7 @@ FijaStock
   -> transport adapter
   -> SaleImportService
   -> FactX sale aggregate
+  -> future DocumentoEmitido / billing workflow
 
 FactX sale aggregate
   -> billing / issuance abstraction
@@ -56,8 +57,9 @@ An import must never silently overwrite a historical sale.
 The current FactX domain represents received supplier documents. The future integration represents external sales and possible issued fiscal documents. These concepts must remain separate:
 
 - `Proveedor` is not a customer.
-- `Documento` is not an imported external sale.
-- `EstadoDocumento` is not a billing status.
+- `DocumentoRecibido` is not an imported external sale.
+- `DocumentoEmitido` is not an imported external sale or fiscal invoice payload.
+- `EstadoDocumentoRecibido` and `EstadoDocumentoEmitido` are not billing statuses.
 - `TipoDocumento` is not the requested invoice type `A`, `B` or `NONE`.
 
 A future external sale should therefore be its own aggregate with its own line items and snapshots, rather than extending the current `Documento` model.

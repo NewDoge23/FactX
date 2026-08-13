@@ -1,6 +1,6 @@
 # Product Vision
 
-FactX v1 is a desktop portfolio application for internal receipt and invoice control in small businesses.
+FactX v1 is a desktop portfolio application for internal received and issued commercial-document control in small businesses.
 
 ## Problem
 
@@ -18,18 +18,16 @@ FactX is not an accounting system. It will not replace an accountant, official f
 
 ## FactX v1 Scope
 
-FactX v1 focuses on:
+FactX v1 focuses on received documents (suppliers, documents, attachments, states and payments) and issued documents (customers, documents, attachments, states and collections), plus:
 
-- suppliers;
-- documents and receipts;
-- local attachments;
-- simple states;
 - filters;
 - CSV export;
 - a minimal dashboard;
 - simple payments if they remain easy to explain.
 
 FactX v1 excludes login, roles, OCR, scanning, sync, AI, SaaS and installer polish.
+
+It does not implement electronic fiscal issuance or ARCA. Issued-document support keeps a clear product boundary for a future billing module.
 
 ## Future Vision
 

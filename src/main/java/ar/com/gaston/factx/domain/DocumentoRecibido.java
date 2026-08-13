@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Locale;
 
-public record Documento(
+public record DocumentoRecibido(
         Long id,
         Long proveedorId,
         TipoDocumento tipo,
@@ -14,14 +14,14 @@ public record Documento(
         LocalDate fechaVencimiento,
         String moneda,
         BigDecimal total,
-        EstadoDocumento estado,
+        EstadoDocumentoRecibido estado,
         String notas,
         OffsetDateTime createdAt,
         OffsetDateTime updatedAt
 ) {
     public static final String DEFAULT_MONEDA = "ARS";
 
-    public Documento {
+    public DocumentoRecibido {
         if (proveedorId == null) {
             throw new IllegalArgumentException("Supplier id is required.");
         }
@@ -29,7 +29,7 @@ public record Documento(
             throw new IllegalArgumentException("Document type is required.");
         }
         if (estado == null) {
-            estado = EstadoDocumento.PENDIENTE;
+            estado = EstadoDocumentoRecibido.PENDIENTE;
         }
         numero = normalizeOptional(numero);
         moneda = normalizeMoneda(moneda);
@@ -37,7 +37,7 @@ public record Documento(
         notas = normalizeOptional(notas);
     }
 
-    public static Documento create(
+    public static DocumentoRecibido create(
             Long proveedorId,
             TipoDocumento tipo,
             String numero,
@@ -45,10 +45,10 @@ public record Documento(
             LocalDate fechaVencimiento,
             String moneda,
             BigDecimal total,
-            EstadoDocumento estado,
+            EstadoDocumentoRecibido estado,
             String notas
     ) {
-        return new Documento(
+        return new DocumentoRecibido(
                 null,
                 proveedorId,
                 tipo,
@@ -83,7 +83,7 @@ public record Documento(
             return BigDecimal.ZERO;
         }
         if (value.signum() < 0) {
-            throw new IllegalArgumentException("Document total cannot be negative.");
+            throw new IllegalArgumentException("Received document total cannot be negative.");
         }
         return value;
     }

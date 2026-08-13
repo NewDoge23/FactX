@@ -1,11 +1,11 @@
 package ar.com.gaston.factx.service;
 
-import ar.com.gaston.factx.domain.Documento;
-import ar.com.gaston.factx.domain.EstadoDocumento;
+import ar.com.gaston.factx.domain.DocumentoRecibido;
+import ar.com.gaston.factx.domain.EstadoDocumentoRecibido;
 import ar.com.gaston.factx.domain.TipoDocumento;
-import ar.com.gaston.factx.repository.DocumentoRepository;
+import ar.com.gaston.factx.repository.DocumentoRecibidoRepository;
 import ar.com.gaston.factx.repository.ProveedorRepository;
-import ar.com.gaston.factx.validation.DocumentoValidator;
+import ar.com.gaston.factx.validation.DocumentoRecibidoValidator;
 import ar.com.gaston.factx.validation.ValidationException;
 
 import java.math.BigDecimal;
@@ -14,16 +14,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class DocumentoService {
-    private final DocumentoRepository documentoRepository;
+public final class DocumentoRecibidoService {
+    private final DocumentoRecibidoRepository documentoRepository;
     private final ProveedorRepository proveedorRepository;
 
-    public DocumentoService(DocumentoRepository documentoRepository, ProveedorRepository proveedorRepository) {
+    public DocumentoRecibidoService(
+            DocumentoRecibidoRepository documentoRepository,
+            ProveedorRepository proveedorRepository
+    ) {
         this.documentoRepository = Objects.requireNonNull(documentoRepository, "documentoRepository");
         this.proveedorRepository = Objects.requireNonNull(proveedorRepository, "proveedorRepository");
     }
 
-    public Documento create(
+    public DocumentoRecibido create(
             Long proveedorId,
             TipoDocumento tipo,
             String numero,
@@ -31,40 +34,32 @@ public final class DocumentoService {
             LocalDate fechaVencimiento,
             String moneda,
             BigDecimal total,
-            EstadoDocumento estado,
+            EstadoDocumentoRecibido estado,
             String notas
     ) {
-        Documento documento = Documento.create(
-                proveedorId,
-                tipo,
-                numero,
-                fechaEmision,
-                fechaVencimiento,
-                moneda,
-                total,
-                estado,
-                notas
+        DocumentoRecibido documento = DocumentoRecibido.create(
+                proveedorId, tipo, numero, fechaEmision, fechaVencimiento, moneda, total, estado, notas
         );
-        DocumentoValidator.validateForCreate(documento);
+        DocumentoRecibidoValidator.validateForCreate(documento);
         requireExistingSupplier(documento.proveedorId());
         return documentoRepository.create(documento);
     }
 
-    public Optional<Documento> findById(long id) {
-        validateDocumentId(id);
+    public Optional<DocumentoRecibido> findById(long id) {
+        DocumentoRecibidoValidator.validateDocumentId(id);
         return documentoRepository.findById(id);
     }
 
-    public List<Documento> findAll() {
+    public List<DocumentoRecibido> findAll() {
         return documentoRepository.findAll();
     }
 
-    public List<Documento> findByProveedorId(long proveedorId) {
-        DocumentoValidator.validateSupplierId(proveedorId);
+    public List<DocumentoRecibido> findByProveedorId(long proveedorId) {
+        DocumentoRecibidoValidator.validateSupplierId(proveedorId);
         return documentoRepository.findByProveedorId(proveedorId);
     }
 
-    public Optional<Documento> update(
+    public Optional<DocumentoRecibido> update(
             Long id,
             Long proveedorId,
             TipoDocumento tipo,
@@ -73,42 +68,25 @@ public final class DocumentoService {
             LocalDate fechaVencimiento,
             String moneda,
             BigDecimal total,
-            EstadoDocumento estado,
+            EstadoDocumentoRecibido estado,
             String notas
     ) {
-        Documento documento = new Documento(
-                id,
-                proveedorId,
-                tipo,
-                numero,
-                fechaEmision,
-                fechaVencimiento,
-                moneda,
-                total,
-                estado,
-                notas,
-                null,
-                null
+        DocumentoRecibido documento = new DocumentoRecibido(
+                id, proveedorId, tipo, numero, fechaEmision, fechaVencimiento, moneda, total, estado, notas, null, null
         );
-        DocumentoValidator.validateForUpdate(documento);
+        DocumentoRecibidoValidator.validateForUpdate(documento);
         requireExistingSupplier(documento.proveedorId());
         return documentoRepository.update(documento);
     }
 
     public boolean delete(long id) {
-        validateDocumentId(id);
+        DocumentoRecibidoValidator.validateDocumentId(id);
         return documentoRepository.delete(id);
     }
 
     private void requireExistingSupplier(long proveedorId) {
         if (proveedorRepository.findById(proveedorId).isEmpty()) {
             throw new ValidationException("Supplier does not exist: " + proveedorId + ".");
-        }
-    }
-
-    private static void validateDocumentId(long id) {
-        if (id <= 0) {
-            throw new ValidationException("Document id must be positive.");
         }
     }
 }

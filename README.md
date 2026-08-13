@@ -1,10 +1,10 @@
 # FactX
 
-FactX is being rebuilt as a clean Java desktop portfolio project for internal receipt and invoice control in small businesses.
+FactX is being rebuilt as a clean Java desktop portfolio project for internal received and issued commercial-document control in small businesses.
 
-Current version: `v0.0.9`.
+Current version: `v0.0.10`.
 
-Latest milestone: pre-`v0.1.0` technical-base review and stabilization.
+Latest milestone: separate foundations for received and issued commercial documents.
 
 This repository is a clean reset. The previous prototype is kept only as a local ignored backup in `_factx_legacy_local/` and must not be committed.
 
@@ -14,10 +14,8 @@ FactX v1 is a portfolio-ready desktop application, not a commercial product yet.
 
 FactX v1 should eventually include:
 
-- suppliers;
-- documents and receipts;
-- attachments;
-- document states;
+- suppliers, received documents, attachments, states and payments;
+- customers, issued documents, attachments, states and collections;
 - filters;
 - CSV export;
 - a minimal dashboard;
@@ -130,4 +128,4 @@ The app does not need Docker to open the current `v0.0.9` window.
 
 ## Status
 
-`v0.0.9` is a pre-`v0.1.0` review and stabilization milestone. The offline JavaFX shell remains limited to local navigation and explicit placeholders; it does not add business CRUD, database startup or alter the post-v1 boundary for a future FijaStock sales-import and billing integration.
+`v0.0.10` separates received supplier documents from issued customer documents. It adds no business UI CRUD, ARCA, fiscal issuance, HTTP or FijaStock runtime integration.

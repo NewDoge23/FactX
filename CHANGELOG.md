@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.10 - Received and issued document foundations
+
+- Split the commercial-document domain into explicit received and issued models and settlement states.
+- Added customer, issued-document, collection and issued-attachment persistence foundations.
+- Preserved existing received-document data through a Flyway rename migration.
+
 ## v0.0.9 - Pre-v0.1 project review
 
 - Audited the technical base, documentation, tests, repository hygiene and milestone scope before starting supplier management.

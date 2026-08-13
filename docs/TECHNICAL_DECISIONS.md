@@ -36,9 +36,9 @@ Jdbi keeps persistence explicit without adding a heavy ORM layer.
 
 Jdbi is created from a `DataSource` when persistence code needs it.
 
-`v0.0.5` adds base repositories for suppliers and documents. Repository SQL stays explicit and small, with no Hibernate/JPA, no Spring and no UI coupling.
+`v0.0.10` keeps repository SQL explicit and small for `Proveedor`, `DocumentoRecibido`, `Cliente` and `DocumentoEmitido`, with no Hibernate/JPA, no Spring and no UI coupling.
 
-`v0.0.6` adds small concrete services over those repositories. The services keep the use-case rules outside JavaFX: supplier IDs must be positive, documents need an existing supplier, due dates cannot precede issue dates, currency codes use three uppercase letters and totals preserve the database's two-decimal precision. Unit tests use local repository stubs, so they remain independent of PostgreSQL without adding a mock framework or a generic repository abstraction.
+Small concrete services keep use-case rules outside the UI: counterparty IDs must be positive, received documents need an existing supplier, issued documents need an existing customer, due dates cannot precede issue dates, currency codes use three uppercase letters and totals preserve the database's two-decimal precision. Unit tests use local repository stubs, so they remain independent of PostgreSQL without a mock framework or generic repository abstraction.
 
 ## Synthetic Demo Data Loader
 
@@ -88,7 +88,7 @@ OCR, scanner integration and sync are useful future features, but they add exter
 
 ## Future External Sales And Billing Boundary
 
-FactX v1 manages received supplier documents. A possible post-v1 FijaStock integration concerns imported external sales and eventual issued billing, so it must not reuse the current `Proveedor`, `Documento`, `EstadoDocumento` or `TipoDocumento` concepts for customers, sales, billing states or requested receipt types.
+FactX v1 manages received supplier documents and manually recorded issued customer documents. A possible post-v1 FijaStock integration concerns imported external sales and future electronic billing, so it must not reuse `Proveedor`, `DocumentoRecibido`, `EstadoDocumentoRecibido`, `DocumentoEmitido`, `EstadoDocumentoEmitido` or `TipoDocumento` as sale aggregates, billing states or requested receipt types.
 
 The future boundary is transport-agnostic: a versioned sale snapshot can reach a `SaleImportService` through an adapter, while issuance remains behind a separate billing-provider abstraction. There is no HTTP, direct SQLite access, shared database or ARCA implementation today.
 

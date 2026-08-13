@@ -55,7 +55,7 @@ Use this checklist to validate the technical base from a clean FactX checkout. I
    mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.DemoDataLoader
    ```
 
-   The first run reports five suppliers and six documents created. Run the same command a second time: it should report zero newly created rows and the existing dataset counts instead.
+   The first run loads synthetic received and issued fixtures. Run the same command a second time: it should report zero newly created received or issued rows.
 
 8. Start the JavaFX application shell if a visual environment is available:
 

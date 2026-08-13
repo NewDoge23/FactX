@@ -12,9 +12,13 @@ import java.util.stream.Collectors;
 public final class DatabaseBootstrap {
     public static final List<String> CORE_TABLES = List.of(
             "proveedor",
-            "documento",
-            "adjunto",
-            "pago"
+            "documento_recibido",
+            "adjunto_recibido",
+            "pago_realizado",
+            "cliente",
+            "documento_emitido",
+            "adjunto_emitido",
+            "cobro"
     );
 
     private final FlywayMigrator flywayMigrator;

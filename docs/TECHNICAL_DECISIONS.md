@@ -38,6 +38,12 @@ Jdbi is created from a `DataSource` when persistence code needs it.
 
 `v0.0.6` adds small concrete services over those repositories. The services keep the use-case rules outside JavaFX: supplier IDs must be positive, documents need an existing supplier, due dates cannot precede issue dates, currency codes use three uppercase letters and totals preserve the database's two-decimal precision. Unit tests use local repository stubs, so they remain independent of PostgreSQL without adding a mock framework or a generic repository abstraction.
 
+## Synthetic Demo Data Loader
+
+`v0.0.7` adds `DemoDataLoader` as an explicit development tool. It uses the existing supplier and document services after the normal database bootstrap; it is not triggered by JavaFX startup or unit tests.
+
+The fixed dataset uses clearly fictional `FactX Demo` supplier names, the placeholder CUIT `00-00000000-0` and per-document synthetic note markers. On a repeated sequential run, the loader treats an exact supplier name and marker as already present and skips it. This application-level check is intentionally limited to the static demo dataset; it does not introduce a generic fixture framework, a database constraint or any new business rule.
+
 ## Database Bootstrap Check
 
 `v0.0.3` adds a command-line technical check for the development PostgreSQL database. It creates the configured pool, runs Flyway explicitly, validates `SELECT 1` and verifies the four current core tables.

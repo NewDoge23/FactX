@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.7 - Datos demo sintéticos y clean clone
+
+- Added an explicit, idempotent synthetic demo-data loader for development and demos.
+- Added unit coverage for the demo dataset composition and duplicate prevention.
+- Added a practical clean-clone checklist and documented the loader workflow.
+
 ## v0.0.6 - Servicios y validación mínimos
 
 - Added small supplier and document services over the existing repositories.

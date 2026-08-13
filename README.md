@@ -2,9 +2,9 @@
 
 FactX is being rebuilt as a clean Java desktop portfolio project for internal receipt and invoice control in small businesses.
 
-Current version: `v0.0.6`.
+Current version: `v0.0.7`.
 
-Latest milestone: domain services and validation without UI.
+Latest milestone: synthetic demo data and clean-clone validation.
 
 This repository is a clean reset. The previous prototype is kept only as a local ignored backup in `_factx_legacy_local/` and must not be committed.
 
@@ -49,7 +49,7 @@ Docker is allowed only as a development and portfolio demo helper for PostgreSQL
 - SLF4J + Logback
 - JUnit 5
 
-No Spring Boot, Hibernate/JPA, OCR, scanner integration, AI, login, roles or sync are included in `v0.0.6`.
+No Spring Boot, Hibernate/JPA, OCR, scanner integration, AI, login, roles or sync are included in `v0.0.7`.
 
 ## Configuration
 
@@ -102,6 +102,16 @@ mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.RepositoryCheck
 
 The repository check inserts synthetic supplier and document rows, reads them back through the Jdbi repositories and deletes them. It is an explicit development check, not a user-facing feature.
 
+Load the explicit synthetic demo dataset into the development database:
+
+```bash
+mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.DemoDataLoader
+```
+
+The loader applies the existing bootstrap first, then creates five clearly fictional `FactX Demo` suppliers and six associated documents. It never runs during JavaFX startup or `mvn clean test`. Running it again skips the same supplier names and document markers instead of duplicating the dataset.
+
+For a complete clean-clone runbook, see [Clean Clone Checklist](docs/CLEAN_CLONE_CHECKLIST.md).
+
 If running Java commands manually outside the Maven check, use a PostgreSQL-compatible timezone:
 
 ```bash
@@ -116,8 +126,8 @@ Docker may warn about orphan containers such as `factx-db-1` when an older compo
 docker compose up -d --remove-orphans
 ```
 
-The app does not need Docker to open the current `v0.0.6` window.
+The app does not need Docker to open the current `v0.0.7` window.
 
 ## Status
 
-`v0.0.6` adds small supplier and document services plus validation over the existing repositories, still without business UI. The project also retains a post-v1 architectural note for a future, decoupled FijaStock sales-import and billing boundary; it does not implement that integration.
+`v0.0.7` adds an explicit idempotent loader for synthetic demo data and a clean-clone validation checklist. It does not add business UI or alter the post-v1 boundary for a future FijaStock sales-import and billing integration.

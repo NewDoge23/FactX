@@ -81,7 +81,7 @@ Avoid Spring, Hibernate, complex layering, generic frameworks and premature abst
 - `v0.0.4`: timezone normalization, Docker troubleshooting, orphan container guidance, strategic roadmap update, stronger dev environment docs.
 - `v0.0.5`: minimal Jdbi repositories for suppliers and documents, no UI.
 - `v0.0.6`: minimal domain services and validation, no UI.
-- `v0.0.7`: synthetic demo data and clean clone checklist.
+- `v0.0.7`: explicit idempotent synthetic demo data loader and clean clone checklist.
 - `v0.0.8`: JavaFX structure prepared for business screens.
 - `v0.0.9`: pre-`v0.1.0` review of docs, naming, tests, repo hygiene and scope.
 

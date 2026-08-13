@@ -195,6 +195,12 @@ Acceptance: no known blockers remain before `v1.0.0`.
 
 Acceptance: FactX can be confidently shown in LinkedIn, GitHub and interviews as a complete v1 portfolio project.
 
+## Post-v1: Optional External Sales And Billing Integration
+
+After `v1.0.0`, FactX may evaluate an optional, decoupled integration that lets FijaStock submit versioned snapshots of completed external sales for later documentation or billing workflows. This is deliberately outside the committed v1 scope: it does not add an API, FijaStock dependency, shared database, ARCA integration or issued-invoice behavior to any v0.x or v1 milestone.
+
+If approved later, the work should begin with a separate sale aggregate, a versioned import contract, database-enforced external idempotency and a transport-agnostic `SaleImportService` boundary. See [Future Integrations](FUTURE_INTEGRATIONS.md) for the retained context and constraints.
+
 ## First LinkedIn Milestone
 
 `v0.3.0` remains the best first LinkedIn milestone.

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class DocumentoRepository {
+public class DocumentoRepository {
     private final Jdbi jdbi;
 
     public DocumentoRepository(Jdbi jdbi) {

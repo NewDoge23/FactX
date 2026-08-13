@@ -36,6 +36,8 @@ Jdbi is created from a `DataSource` when persistence code needs it.
 
 `v0.0.5` adds base repositories for suppliers and documents. Repository SQL stays explicit and small, with no Hibernate/JPA, no Spring and no UI coupling.
 
+`v0.0.6` adds small concrete services over those repositories. The services keep the use-case rules outside JavaFX: supplier IDs must be positive, documents need an existing supplier, due dates cannot precede issue dates, currency codes use three uppercase letters and totals preserve the database's two-decimal precision. Unit tests use local repository stubs, so they remain independent of PostgreSQL without adding a mock framework or a generic repository abstraction.
+
 ## Database Bootstrap Check
 
 `v0.0.3` adds a command-line technical check for the development PostgreSQL database. It creates the configured pool, runs Flyway explicitly, validates `SELECT 1` and verifies the four current core tables.
@@ -75,3 +77,11 @@ FactX v1 is local and portfolio-oriented. Login and roles add security expectati
 ## Why OCR, Scanning And Sync Are Out Of v1
 
 OCR, scanner integration and sync are useful future features, but they add external dependencies and operational complexity. They should return only after the document, supplier and payment workflows are stable.
+
+## Future External Sales And Billing Boundary
+
+FactX v1 manages received supplier documents. A possible post-v1 FijaStock integration concerns imported external sales and eventual issued billing, so it must not reuse the current `Proveedor`, `Documento`, `EstadoDocumento` or `TipoDocumento` concepts for customers, sales, billing states or requested receipt types.
+
+The future boundary is transport-agnostic: a versioned sale snapshot can reach a `SaleImportService` through an adapter, while issuance remains behind a separate billing-provider abstraction. There is no HTTP, direct SQLite access, shared database or ARCA implementation today.
+
+Future imports must retain complete customer and line-item snapshots, so FactX never needs to query FijaStock to reconstruct a sale. Their external identity is conceptually `(source_system, external_sale_id)` and must eventually be protected with a database `UNIQUE` constraint. Repeated equivalent data should be reported as already imported; incompatible repeated data must be a conflict rather than a silent overwrite. Further context is in [Future Integrations](FUTURE_INTEGRATIONS.md).

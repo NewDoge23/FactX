@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.6 - Servicios y validación mínimos
+
+- Added small supplier and document services over the existing repositories.
+- Added validation for positive identifiers, supplier existence, document dates, currency shape and monetary precision.
+- Added unit coverage for services and validation without requiring PostgreSQL.
+- Documented a post-v1, decoupled future boundary for FijaStock sales imports and billing.
+
 ## v0.0.5 - Persistencia base sin UI
 
 - Added minimal supplier and document domain models.

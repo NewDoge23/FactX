@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class ProveedorRepository {
+public class ProveedorRepository {
     private final Jdbi jdbi;
 
     public ProveedorRepository(Jdbi jdbi) {

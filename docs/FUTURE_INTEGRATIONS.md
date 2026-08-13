@@ -54,7 +54,7 @@ An import must never silently overwrite a historical sale.
 
 ## Separate Concepts
 
-The current FactX domain represents received supplier documents. The future integration represents external sales and possible issued fiscal documents. These concepts must remain separate:
+The current FactX domain represents received supplier documents and issued customer documents. The future integration represents external sales and possible issued fiscal documents. These concepts must remain separate:
 
 - `Proveedor` is not a customer.
 - `DocumentoRecibido` is not an imported external sale.
@@ -66,7 +66,7 @@ A future external sale should therefore be its own aggregate with its own line i
 
 ## Future Billing Boundary
 
-The future sale lifecycle is separate from `EstadoDocumento`:
+The future sale lifecycle is separate from `EstadoDocumentoRecibido` and `EstadoDocumentoEmitido`:
 
 ```text
 PENDING -> PROCESSING -> ISSUED / ERROR

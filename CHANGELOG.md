@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.11 - Compose Desktop migration
+
+- Replaced the JavaFX/Maven desktop shell with Kotlin 2.4.10, Compose Desktop 1.11.1 and Gradle Kotlin DSL.
+- Added the local-only FactX visual shell: sidebar navigation, custom X logo, dashboard demo and milestone placeholders.
+- Preserved the Java 21 domain, services, repositories, Flyway migrations and 35 unit tests.
+- Added Gradle tasks for the explicit database, repository and demo-data checks.
+
 ## v0.0.10 - Received and issued document foundations
 
 - Split the commercial-document domain into explicit received and issued models and settlement states.

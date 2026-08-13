@@ -6,7 +6,6 @@ Use this checklist to validate the technical base from a clean FactX checkout. I
 
 - Git;
 - Java 21;
-- Maven;
 - Docker Desktop with Docker Compose for the development PostgreSQL database.
 
 ## From A Fresh Clone
@@ -18,11 +17,11 @@ Use this checklist to validate the technical base from a clean FactX checkout. I
    cd FactX
    ```
 
-2. Confirm Java 21 and Maven are available:
+2. Confirm Java 21 is available. Gradle is provided by the checked-in wrapper:
 
    ```bash
    java -version
-   mvn -version
+   ./gradlew --version
    ```
 
 3. Start the development database:
@@ -34,33 +33,33 @@ Use this checklist to validate the technical base from a clean FactX checkout. I
 4. Compile and run the unit suite. This command must not require PostgreSQL:
 
    ```bash
-   mvn clean test
+   ./gradlew clean test
    ```
 
 5. Run the explicit PostgreSQL bootstrap check:
 
    ```bash
-   mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.DatabaseCheck
+   ./gradlew databaseCheck
    ```
 
 6. Run the explicit repository check. It inserts and removes its own synthetic rows:
 
    ```bash
-   mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.RepositoryCheck
+   ./gradlew repositoryCheck
    ```
 
 7. Load the fixed synthetic demo dataset:
 
    ```bash
-   mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.DemoDataLoader
+   ./gradlew demoDataLoader
    ```
 
    The first run loads synthetic received and issued fixtures. Run the same command a second time: it should report zero newly created received or issued rows.
 
-8. Start the JavaFX application shell if a visual environment is available:
+8. Start the Compose Desktop shell if a visual environment is available:
 
    ```bash
-   mvn javafx:run
+   ./gradlew run
    ```
 
 The current shell does not load database data automatically. The loader exists so later business-screen milestones have a safe, predictable development dataset.
@@ -78,7 +77,7 @@ FactX reads the following environment variables. The Docker Compose configuratio
 
 ## Troubleshooting
 
-- **Java or Maven version:** `mvn -version` must report Java 21. Install or select Java 21 before running the build.
+- **Java version:** `java -version` must report Java 21. Install or select Java 21 before running the build.
 - **PostgreSQL timezone:** `DatabaseCheck`, `RepositoryCheck` and `DemoDataLoader` configure `America/Argentina/Buenos_Aires` themselves. For Java commands run manually outside those tools, use a PostgreSQL-compatible timezone such as `JAVA_TOOL_OPTIONS=-Duser.timezone=America/Argentina/Buenos_Aires`.
 - **Docker Desktop unavailable:** a message mentioning `dockerDesktopLinuxEngine` or a missing Docker pipe means Docker Desktop is not running. Start it and retry `docker compose up -d`.
 - **Orphan containers:** if Docker reports an older `factx-db-1` service, review it first and then run `docker compose up -d --remove-orphans` if that cleanup is intended.

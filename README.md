@@ -1,16 +1,16 @@
 # FactX
 
-FactX is being rebuilt as a clean Java desktop portfolio project for internal received and issued commercial-document control in small businesses.
+FactX is a local-first JVM desktop portfolio project for internal control of received and issued commercial documents in small businesses.
 
-Current version: `v0.0.10`.
+Current version: `v0.0.11`.
 
-Latest milestone: separate foundations for received and issued commercial documents.
+Latest milestone: the desktop shell now uses Kotlin and Compose Desktop while the domain, services, repositories and tests remain Java.
 
 This repository is a clean reset. The previous prototype is kept only as a local ignored backup in `_factx_legacy_local/` and must not be committed.
 
 ## Goal For FactX v1
 
-FactX v1 is a portfolio-ready desktop application, not a commercial product yet. The goal is to show a simple, defensible Java application for managing the operational side of commercial documents.
+FactX v1 is a portfolio-ready desktop application, not a commercial product yet. The goal is to show a simple, defensible JVM application for managing the operational side of commercial documents.
 
 FactX v1 should eventually include:
 
@@ -21,33 +21,21 @@ FactX v1 should eventually include:
 - a minimal dashboard;
 - simple payments if they stay small and useful.
 
-FactX v1 intentionally excludes:
+FactX v1 intentionally excludes login and roles, OCR, scanning, sync, AI, multi-branch or multi-tenant workflows, final installer packaging and SaaS behavior.
 
-- login and roles;
-- OCR;
-- scanning;
-- sync;
-- AI;
-- multi-branch or multi-tenant workflows;
-- final installer packaging;
-- SaaS behavior.
-
-Docker is allowed only as a development and portfolio demo helper for PostgreSQL. It is not a final product dependency.
+Docker is allowed only as a development and portfolio-demo helper for PostgreSQL. It is not a final product dependency.
 
 ## Stack
 
-- Java 21
-- Maven
-- JavaFX
-- PostgreSQL
-- Flyway
-- HikariCP
-- Jdbi
-- PDFBox
-- SLF4J + Logback
-- JUnit 5
+- Java 21 for the existing core domain, services, repositories and tests;
+- Kotlin 2.4.10 and Compose Desktop 1.11.1 for the desktop shell;
+- Gradle Kotlin DSL with the checked-in Gradle 8.14.4 wrapper;
+- PostgreSQL, Flyway, HikariCP and Jdbi;
+- PDFBox;
+- SLF4J + Logback;
+- JUnit 5.
 
-No Spring Boot, Hibernate/JPA, OCR, scanner integration, AI, login, roles or sync are included in `v0.0.9`.
+There is no Spring Boot, Hibernate/JPA, OCR, scanner integration, AI, login, roles or sync in `v0.0.11`.
 
 ## Configuration
 
@@ -60,21 +48,29 @@ FactX reads database configuration from environment variables. Missing values us
 | `FACTX_DB_PASSWORD` | `factx` |
 | `FACTX_DB_POOL_SIZE` | `5` |
 
-The database wiring is present for future work, but the current JavaFX shell does not open database connections on startup.
+The database wiring is present for repositories and explicit development tools. The Compose desktop shell displays local demo data and does not create database connections, run migrations or query PostgreSQL at startup.
 
 ## Run
 
-Compile and test:
+On Windows, compile and run the unit suite without PostgreSQL:
 
-```bash
-mvn clean test
+```powershell
+.\gradlew.bat clean test
 ```
 
-Run the JavaFX application shell:
+On macOS or Linux, use:
 
 ```bash
-mvn javafx:run
+./gradlew clean test
 ```
+
+Start the Compose Desktop shell:
+
+```powershell
+.\gradlew.bat run
+```
+
+The navigation and dashboard are local, polished demo views. They are intentionally not CRUD screens and do not access the database.
 
 Optional development database:
 
@@ -82,50 +78,42 @@ Optional development database:
 docker compose up -d
 ```
 
-Docker is only for development and portfolio demos. It is not a dependency of the final desktop product.
+Docker is only for development and portfolio demos. It is not a dependency of the desktop shell.
 
 Run the technical database check against the development PostgreSQL container:
 
-```bash
-mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.DatabaseCheck
+```powershell
+.\gradlew.bat databaseCheck
 ```
 
-The database check validates PostgreSQL connectivity, runs Flyway migrations explicitly and confirms the core tables exist. It is a technical development check, not a user-facing feature. The check normalizes the Java timezone to `America/Argentina/Buenos_Aires`, which PostgreSQL accepts for the local development environment.
+It validates PostgreSQL connectivity, runs Flyway migrations explicitly and confirms the core tables exist. It is a development check, not a user-facing feature.
 
-Run the technical repository check against the development PostgreSQL container:
+Run the technical repository check:
 
-```bash
-mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.RepositoryCheck
+```powershell
+.\gradlew.bat repositoryCheck
 ```
 
-The repository check inserts synthetic supplier and document rows, reads them back through the Jdbi repositories and deletes them. It is an explicit development check, not a user-facing feature.
+It inserts synthetic supplier, received-document, customer and issued-document rows, reads them through the Jdbi repositories and removes them.
 
-Load the explicit synthetic demo dataset into the development database:
+Load the explicit synthetic demo dataset:
 
-```bash
-mvn exec:java -Dexec.mainClass=ar.com.gaston.factx.tools.DemoDataLoader
+```powershell
+.\gradlew.bat demoDataLoader
 ```
 
-The loader applies the existing bootstrap first, then creates five clearly fictional `FactX Demo` suppliers and six associated documents. It never runs during JavaFX startup or `mvn clean test`. Running it again skips the same supplier names and document markers instead of duplicating the dataset.
+The loader creates five fictional `FactX Demo` suppliers with six received documents, and four fictional customers with five issued documents. It is never invoked by the Compose startup or the unit suite; repeated runs are idempotent.
 
 For a complete clean-clone runbook, see [Clean Clone Checklist](docs/CLEAN_CLONE_CHECKLIST.md).
 
-If running Java commands manually outside the Maven check, use a PostgreSQL-compatible timezone:
-
-```bash
-JAVA_TOOL_OPTIONS=-Duser.timezone=America/Argentina/Buenos_Aires
-```
-
 If Docker Desktop is not running, `docker compose up -d` may fail with a message about `dockerDesktopLinuxEngine` or a missing Docker pipe. Open Docker Desktop and run the command again.
 
-Docker may warn about orphan containers such as `factx-db-1` when an older compose service name exists locally. FactX does not remove those automatically. If you want to clean them manually, run:
+Docker may warn about orphan containers such as `factx-db-1` when an older compose service name exists locally. FactX does not remove those automatically. If you intend to clean them manually, run:
 
 ```bash
 docker compose up -d --remove-orphans
 ```
 
-The app does not need Docker to open the current `v0.0.9` window.
-
 ## Status
 
-`v0.0.10` separates received supplier documents from issued customer documents. It adds no business UI CRUD, ARCA, fiscal issuance, HTTP or FijaStock runtime integration.
+`v0.0.11` is a visual and build migration only. It adds no business UI CRUD, ARCA or fiscal issuance, HTTP, sync or FijaStock runtime integration.

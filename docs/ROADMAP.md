@@ -45,7 +45,7 @@ It must be stable enough to demo from a clean clone, explain in an interview and
 
 Keep packages simple and boring:
 
-- `ui`: JavaFX controllers, views and UI helpers.
+- `ui`: Compose screens, local navigation and UI helpers.
 - `domain`: records/classes/enums for suppliers, documents, states and payments.
 - `repository`: Jdbi persistence code.
 - `service`: small use-case services and transaction boundaries.
@@ -63,7 +63,7 @@ Avoid Spring, Hibernate, complex layering, generic frameworks and premature abst
 - No real receipts, invoices, screenshots of private documents or sensitive files in Git.
 - Docker only for development and portfolio demo.
 - Clean clone should be reproducible.
-- `mvn clean test` must not require PostgreSQL.
+- `./gradlew clean test` must not require PostgreSQL.
 - PostgreSQL/Flyway checks must stay explicit.
 - Error messages should be clear and demo-friendly.
 - Demo data must be synthetic.
@@ -85,6 +85,7 @@ Avoid Spring, Hibernate, complex layering, generic frameworks and premature abst
 - `v0.0.8`: JavaFX application shell, local placeholder navigation and no business CRUD.
 - `v0.0.9`: pre-`v0.1.0` review of docs, naming, tests, repo hygiene and scope.
 - `v0.0.10`: explicit received/issued commercial-document foundation, no business UI CRUD.
+- `v0.0.11`: Gradle Kotlin DSL and Compose Desktop shell with local demo dashboard, no business UI CRUD.
 
 Acceptance: technical base is reproducible, documented and free of business UI shortcuts.
 
@@ -99,7 +100,7 @@ Acceptance: create, edit, list and delete suppliers through the app with clear v
 
 ### `v0.2.x` - Documents
 
-- document domain model;
+- received and issued document workflows;
 - document types;
 - supplier-document relationship;
 - document repository;
@@ -217,14 +218,14 @@ Allowed to inspect and rewrite ideas from `_factx_legacy_local/`:
 
 - supplier, document and payment model ideas;
 - simple DAO patterns;
-- JavaFX layout ideas for suppliers and documents;
+- old desktop layout ideas for suppliers and documents;
 - CSS component ideas;
 - local storage/path handling;
 - PDF helper ideas later in attachments work.
 
 Do not reintroduce:
 
-- Gradle;
+- Maven or JavaFX runtime code;
 - old migrations wholesale;
 - login, roles, users or auth;
 - sync queue or sync worker;

@@ -4,15 +4,15 @@
 
 FactX uses Java 21 because it is a modern LTS version and fits the portfolio goal of showing current Java skills.
 
-## Maven
+## Gradle Kotlin DSL
 
-FactX resets to Maven for a simple, widely recognized Java build structure.
+`v0.0.11` replaces Maven with the checked-in Gradle 8.14.4 wrapper and Kotlin DSL. The wrapper makes the build reproducible without requiring a local Gradle installation, while retaining Java 21 compilation for the core.
 
-## JavaFX
+## Kotlin And Compose Desktop
 
-FactX is a desktop app. JavaFX keeps the UI local, inspectable and appropriate for a portfolio project focused on Java.
+FactX is a desktop app. Kotlin 2.4.10 and Compose Desktop 1.11.1 provide a local, inspectable UI without changing the Java domain, services, repositories or test suite.
 
-`v0.0.8` keeps the shell in FXML because the project already uses FXML and its layout is declarative. `MainShellController` owns only local navigation and changes a single central content area from `NavigationDestination`; it does not access services, repositories or database configuration. The Proveedores and Documentos entries remain placeholders until their scheduled milestones, and starting the shell does not create a database pool or run migrations.
+The v0.0.11 shell owns only local navigation and demo presentation. Its sidebar, custom X logo, dashboard and placeholders do not access services, repositories or database configuration; starting it does not create a database pool, run migrations or query PostgreSQL. The visual system uses the named `FactXColors` and `FactXTokens` primitives so the shell remains coherent without introducing a component framework.
 
 ## PostgreSQL
 
@@ -28,7 +28,7 @@ FactX does not run `Flyway.repair()` automatically. Migration failures should st
 
 HikariCP provides a small, standard JDBC connection pool.
 
-The initial pool name is `FactXPool`. The JavaFX shell does not create a pool during startup yet.
+The initial pool name is `FactXPool`. The Compose shell does not create a pool during startup.
 
 ## Jdbi
 
@@ -42,21 +42,21 @@ Small concrete services keep use-case rules outside the UI: counterparty IDs mus
 
 ## Synthetic Demo Data Loader
 
-`v0.0.7` adds `DemoDataLoader` as an explicit development tool. It uses the existing supplier and document services after the normal database bootstrap; it is not triggered by JavaFX startup or unit tests.
+`v0.0.7` adds `DemoDataLoader` as an explicit development tool. It uses the existing supplier and document services after the normal database bootstrap; it is not triggered by Compose startup or unit tests.
 
 The fixed dataset uses clearly fictional `FactX Demo` supplier names, the placeholder CUIT `00-00000000-0` and per-document synthetic note markers. On a repeated sequential run, the loader treats an exact supplier name and marker as already present and skips it. This application-level check is intentionally limited to the static demo dataset; it does not introduce a generic fixture framework, a database constraint or any new business rule.
 
 ## Database Bootstrap Check
 
-`v0.0.3` adds a command-line technical check for the development PostgreSQL database. It creates the configured pool, runs Flyway explicitly, validates `SELECT 1` and verifies the four current core tables.
+`v0.0.3` adds a command-line technical check for the development PostgreSQL database. It creates the configured pool, runs Flyway explicitly, validates `SELECT 1` and verifies the current core tables (eight after the v0.0.10 received/issued split).
 
-This check is intentionally separate from the JavaFX startup. It is a development validation tool, not a user-facing feature.
+This check is intentionally separate from the Compose startup. It is a development validation tool, not a user-facing feature.
 
 ## Repository Check
 
 `v0.0.5` adds a command-line technical check for the base repositories. It inserts synthetic supplier and document rows, reads them back and cleans them up.
 
-This check is explicit and separate from `mvn clean test`, so unit tests do not require PostgreSQL.
+This check is explicit and separate from `./gradlew clean test`, so unit tests do not require PostgreSQL.
 
 ## PDFBox
 

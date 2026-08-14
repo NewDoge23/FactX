@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DemoDataLoaderTest {
     private static final Jdbi UNUSED_JDBI = Jdbi.create("jdbc:postgresql://localhost:1/factx_unreachable", "factx", "factx");
@@ -43,6 +44,27 @@ class DemoDataLoaderTest {
         assertEquals(0, second.receivedDocumentsCreated());
         assertEquals(0, second.demoCustomers());
         assertEquals(0, second.issuedDocumentsCreated());
+    }
+
+    @Test
+    void loadsUsefulVariationForBothDocumentDirections() {
+        Suppliers suppliers = new Suppliers();
+        Customers customers = new Customers();
+        Received received = new Received();
+        Issued issued = new Issued();
+        DemoDataLoader loader = new DemoDataLoader(new ProveedorService(suppliers), new DocumentoRecibidoService(received, suppliers), new ClienteService(customers), new DocumentoEmitidoService(issued, customers));
+
+        loader.load();
+
+        assertEquals(6, received.values.size());
+        assertEquals(5, issued.values.size());
+        assertTrue(received.values.stream().map(DocumentoRecibido::tipo).distinct().count() > 1);
+        assertTrue(issued.values.stream().map(DocumentoEmitido::tipo).distinct().count() > 1);
+        assertTrue(received.values.stream().map(DocumentoRecibido::estado).distinct().count() > 1);
+        assertTrue(issued.values.stream().map(DocumentoEmitido::estado).distinct().count() > 1);
+        assertTrue(received.values.stream().allMatch(documento -> "ARS".equals(documento.moneda())));
+        assertTrue(issued.values.stream().allMatch(documento -> "ARS".equals(documento.moneda())));
+        assertTrue(received.values.stream().anyMatch(documento -> documento.numero() == null));
     }
 
     private static final class Suppliers extends ProveedorRepository {
